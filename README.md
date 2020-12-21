@@ -52,8 +52,8 @@ All functions, macros, and variables starting by `cmaw_internal` or `CMAW_INTERN
 - `cmaw_update_library_index ()`: updates the ArduinoCLI index files for libraries.
 - `cmaw_install_libraries (<name>[@<version>]... [NO_DEPS])`: installs the specified libraries. Specify `NO_DEPS` to prevent the dependencies of these libraries from being installed as well.
 - `cmaw_uninstall_libraries (<lib-name>...)`: uninstalls the specified libraries.
-- `cmaw_upgrade_cores (<lib-name>...)`: upgrades the specified libraries.
-- `cmaw_upgrade_cores (ALL)`: upgrades all the libraries.
+- `cmaw_upgrade_libraries (<lib-name>...)`: upgrades the specified libraries.
+- `cmaw_upgrade_libraries (ALL)`: upgrades all the libraries.
 - `cmaw_clean_arduino_cache ()`: cleans the Arduino cache.
 - `cmaw_create_sketch (<name>):` creates a named sketch (in the default sketch location).
 - `cmaw_preprocess (<out-var> <fqbn> "path/to/sketch")`: preprocesses sketch with the provided board and stores the ouput in `<out-var>`
