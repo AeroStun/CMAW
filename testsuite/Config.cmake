@@ -1,0 +1,48 @@
+function (test_config)
+  function (test_config_init)
+    set (CONFIG_DIR "${TESTBENCH_TMPDIR}/config")
+    set (CONFIG_FILE "${TESTBENCH_TMPDIR}/config/arduino-cli.yaml")
+    cmaw_init_config ("${CONFIG_DIR}")
+    
+    if (EXISTS "${CONFIG_FILE}")
+      set (INIT_TEST_PASS TRUE PARENT_SCOPE)
+    else ()
+      set (INIT_TEST_PASS FALSE PARENT_SCOPE)
+      message ("Failed subtest \"init\"")
+    endif ()
+  endfunction ()
+
+  function (test_config_dump_text)
+    cmaw_dump_config (CFG_DUMP)
+    
+    if (CFG_DUMP)
+      set (TXTDUMP_TEST_PASS TRUE PARENT_SCOPE)
+    else ()
+      set (TXTDUMP_TEST_PASS FALSE PARENT_SCOPE)
+      message ("Failed subtest \"dump text\"")
+    endif ()
+  endfunction ()
+  
+  function (test_config_dump_json)
+    cmaw_dump_config (CFG_DUMP JSON)
+    
+    if (CFG_DUMP)
+      set (JSDUMP_TEST_PASS TRUE PARENT_SCOPE)
+    else ()
+      set (JSDUMP_TEST_PASS FALSE PARENT_SCOPE)
+      message ("Failed subtest \"dump json\"")
+    endif ()
+  endfunction ()
+
+  test_config_init ()
+  test_config_dump_text ()
+  test_config_dump_json ()
+  
+  if (INIT_TEST_PASS AND TXTDUMP_TEST_PASS AND JSDUMP_TEST_PASS)
+    set (TEST_PASS TRUE PARENT_SCOPE)
+  else ()
+    set (TEST_PASS FALSE PARENT_SCOPE)
+  endif ()
+endfunction ()
+
+test_config ()

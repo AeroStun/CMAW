@@ -25,6 +25,13 @@ All function and macro names starting by `cmaw_` should be considered reserved f
 All variable names starting by `CMAW_` should be considered reserved for CMAW.  
 All functions, macros, and variables starting by `cmaw_internal` or `CMAW_INTERNAL` should be considered implementation details and never used directly.
 
+## Testsuite
+
+To run the testsuite, set the environment variable `ARDUINOCLI_VER` to the version of the ArduinoCLI installation, and run:
+```sh
+cmake -P testsuite/Main.cmake
+```
+
 ## Configuration variables
 
 - `CMAW_ARDUINOCLI_DL_VERSION` \["latest"\]: arduino-cli version to use if there is need to download it.
@@ -67,7 +74,6 @@ All functions, macros, and variables starting by `cmaw_internal` or `CMAW_INTERN
 
 _Highest priority first, lowest last._
 
-- Testsuite
 - CI config with matrix of all supported CMake and ArduinoCLI versions
 - Intentional support for sketch directories
 - User-defined configuration file location
