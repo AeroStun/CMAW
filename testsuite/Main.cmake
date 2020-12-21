@@ -48,13 +48,15 @@ macro (cmaw_run_testsuite)
     endif ()
   endforeach ()
 
+  file (REMOVE_RECURSE "${TESTBENCH_TMPDIR}")
+  
   message ("\nSummary: ${COUNT_PASSED}/${COUNT_CASES} tests passed")
   if (COUNT_PASSED EQUAL COUNT_CASES)
     message ("Testsuite ${BoldGreen}PASSED${ColourReset}")
   else ()
     message ("Testsuite ${BoldRed}FAILED${ColourReset}")
+    message (FATAL_ERROR "")
   endif()
-  
-  file (REMOVE_RECURSE "${TESTBENCH_TMPDIR}")
 endmacro()
+
 cmaw_run_testsuite ()

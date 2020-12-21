@@ -1,0 +1,16 @@
+name: Testsuite
+on: [push, pull_request]
+jobs:
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install ArduinoCLI
+        run: |
+          brew update
+          brew install arduino-cli
+          arduino-cli core install arduino:avr
+      - name: Run testsuite
+        run: |
+          export ARDUINOCLI_VER=$(arduino-cli version --format json | jq -r .VersionString)
+          cmake -P testsuite/Main.cmake
