@@ -1,5 +1,7 @@
 # CMAW - CMake Arduino[CLI] Wrapper
 
+![master testsuite badge](https://github.com/AeroStun/CMAW/workflows/Testsuite/badge.svg?branch=master)
+
 If you want to manage an arduino-cli installation from CMake scripts, or build simple sketches on a headless environment (such as a CI pipeline), CMAW is for you.
 
 ## Usage
