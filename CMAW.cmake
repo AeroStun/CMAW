@@ -14,7 +14,7 @@
 include_guard (DIRECTORY)
 cmake_policy (SET CMP0007 NEW)
 
-set (CMAW_VERSION "0.0.0")
+set (CMAW_VERSION "0.1.0")
 
 set (CMAW_ARDUINOCLI_DL_VERSION      "latest" CACHE STRING   "arduino-cli version to use if there is need to download it")
 set (CMAW_ARDUINOCLI_BINARY_LOCATION ""       CACHE FILEPATH "Path to an existing arduino-cli binary on disk; empty to autodetect")

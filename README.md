@@ -1,4 +1,4 @@
-# CMAW - CMake Arduino[CLI] Wrapper
+# CMAW - CMake Arduino[CLI] Wrapper - Version 0.1.0
 
 If you want to manage an arduino-cli installation from CMake scripts, or build simple sketches on a headless environment (such as a CI pipeline), CMAW is for you.
 
