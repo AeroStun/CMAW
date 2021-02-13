@@ -39,6 +39,8 @@ cmake -P testsuite/Main.cmake
 - `CMAW_ARDUINOCLI_DL_VERSION` \["latest"\]: arduino-cli version to use if there is need to download it.
 - `CMAW_ARDUINOCLI_BINARY_LOCATION` \[""\]: Path to an existing arduino-cli binary on disk; empty to autodetect.
 - `CMAW_ARDUINOCLI_BINARY_NOSYSTEM` \[OFF\]: When enabled, CMAW will skip searching for arduino-cli on the system.
+- `CMAW_ARDUINOCLI_CONFIG_FILEPATH` \[""\]: The custom config file (if not specified the default will be used).
+- `CMAW_ARDUINOCLI_EXTRA_BOARD_URL` \[""\]: Additional URLs for the board manager.
 
 ## Informational variables
 

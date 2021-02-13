@@ -19,9 +19,11 @@ set (CMAW_VERSION "0.0.0")
 set (CMAW_ARDUINOCLI_DL_VERSION      "latest" CACHE STRING   "arduino-cli version to use if there is need to download it")
 set (CMAW_ARDUINOCLI_BINARY_LOCATION ""       CACHE FILEPATH "Path to an existing arduino-cli binary on disk; empty to autodetect")
 set (CMAW_ARDUINOCLI_BINARY_NOSYSTEM OFF      CACHE BOOL     "When enabled, CMAW will skip searching for arduino-cli on the system")
+set (CMAW_ARDUINOCLI_CONFIG_FILEPATH ""       CACHE FILEPATH "The custom config file (if not specified the default will be used).")
+set (CMAW_ARDUINOCLI_EXTRA_BOARD_URL ""       CACHE STRING   "Additional URLs for the board manager.")
 
 cmake_host_system_information (RESULT CMAW_INTERNAL_HOST_64BIT QUERY IS_64BIT)
-if(CMAW_INTERNAL_HOST_64BIT)
+if (CMAW_INTERNAL_HOST_64BIT)
   set (CMAW_INTERNAL_HOST_BITNESS 64)
 else ()
   set (CMAW_INTERNAL_HOST_BITNESS 32)
@@ -124,7 +126,13 @@ endmacro (cmaw_internal_bootstrap)
 cmaw_internal_bootstrap ()
 
 macro (cmaw_internal_ardcli_invoke)
-  execute_process (COMMAND "${CMAW_INTERNAL_ARDCLI_PATH}" ${ARGV}
+  if (CMAW_ARDUINOCLI_CONFIG_FILEPATH)
+    set (CMAW_INTERNAL_ARDCLI_CONFIG_ARG "--config-file" "\"${CMAW_ARDUINOCLI_CONFIG_FILEPATH}\"")
+  endif ()
+  if (CMAW_ARDUINOCLI_EXTRA_BOARD_URL)
+    set (CMAW_INTERNAL_ARDCLI_EXTRA_BURL "--additional-urls" "\"${CMAW_ARDUINOCLI_EXTRA_BOARD_URL}\"")
+  endif ()
+  execute_process (COMMAND "${CMAW_INTERNAL_ARDCLI_PATH}" ${CMAW_INTERNAL_ARDCLI_CONFIG_ARG} ${CMAW_INTERNAL_ARDCLI_EXTRA_BURL} ${ARGV}
                    RESULT_VARIABLE CMAW_INTERNAL_INVOKE_EXITCODE
                    OUTPUT_VARIABLE CMAW_INTERNAL_INVOKE_OUTPUT)
 endmacro ()
@@ -440,9 +448,10 @@ function (add_arduino_sketch TARGET FQBN)
   set (DEP_FILE "some/path") # FIXME
   add_custom_target ("${TARGET}" ${ALL}
                      DEPENDS "${SRC_PATH}" "${DEP_FILE}")
-  set (TEMP_SCRIPT_PATH "${CMAKE_CURRENT_BINARY_DIR}/.")
+  set (TEMP_SCRIPT_PATH "${CMAKE_CURRENT_BINARY_DIR}/CMAWproxy.cmake")
+  
   # TODO Add support for custom libs
-  file(GENERATE OUTPUT output-file CONTENT
+  file(GENERATE OUTPUT "${TEMP_SCRIPT_PATH}" CONTENT
     "# THIS IS A TEMPORARY, GENERATED FILE; DO NOT EDIT                       \
     set (DEFINITIONS_IN \"$<TARGET_PROPERTY:${TARGET},COMPILE_DEFINITIONS>\") \
     set (OPTIONS_IN \"$<TARGET_PROPERTY:${TARGET},COMPILE_OPTIONS>\")         \
@@ -464,7 +473,7 @@ function (add_arduino_sketch TARGET FQBN)
                              \"--build-property\" \"build.extra_flags=\\\"${BUILD_PROPERTIES}\\\"\" \
                              \"${SRC_PATH}\")                                 \
     ")
-  add_custom_command (OUTPUT "${DEP_FILE}"
+  add_custom_command (OUTPUT "${CMAKE_COMMAND}" "-P" "${TEMP_SCRIPT_PATH}"
                       COMMAND "compile" "--fqbn" "${FQBN}" "${SRC_PATH}"
                       MAIN_DEPENDENCY "${SRC_PATH}")
 endfunction ()
