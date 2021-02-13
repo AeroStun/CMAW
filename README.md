@@ -1,4 +1,4 @@
-# CMAW - CMake Arduino[CLI] Wrapper
+# CMAW - CMake Arduino[CLI] Wrapper - Version 0.1.2
 
 ![master testsuite badge](https://github.com/AeroStun/CMAW/workflows/Testsuite/badge.svg?branch=master)
 
@@ -11,7 +11,7 @@ If you want to manage an arduino-cli installation from CMake scripts, or build s
 Download `CMAW.cmake` from this repository, and put it somewhere in a folder you added to your `CMAKE_MODULE_PATH`.
 To do this at configure time, you can simply write:
 ```cmake
-set (CMAW_URL "https://github.com/AeroStun/CMAW/raw/master/CMAW.cmake")
+set (CMAW_URL "https://github.com/AeroStun/CMAW/raw/v0.1.2/CMAW.cmake")
 set (CMAW_RUNDIR "${CMAKE_BINARY_DIR}/runmodules")
 set (CMAW_RUNLOC "${CMAW_RUNDIR}/CMAW.cmake")
 if (NOT EXISTS "${CMAW_RUNLOC}")
