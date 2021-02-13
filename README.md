@@ -41,6 +41,7 @@ cmake -P testsuite/Main.cmake
 - `CMAW_ARDUINOCLI_BINARY_NOSYSTEM` \[OFF\]: When enabled, CMAW will skip searching for arduino-cli on the system.
 - `CMAW_ARDUINOCLI_CONFIG_FILEPATH` \[""\]: The custom config file (if not specified the default will be used).
 - `CMAW_ARDUINOCLI_EXTRA_BOARD_URL` \[""\]: Additional URLs for the board manager.
+- `CMAW_AUTO_PATH`                  \[""\]: Directory where CMAW can self-manage an ArduinoCLI installation
 
 ## Informational variables
 
@@ -69,9 +70,11 @@ cmake -P testsuite/Main.cmake
 - `cmaw_create_sketch (<name>):` creates a named sketch (in the default sketch location).
 - `cmaw_preprocess (<out-var> <fqbn> "path/to/sketch")`: preprocesses sketch with the provided board and stores the ouput in `<out-var>`
 
+## Extra Features
+- ArduinoCLI autodownload: if no path for `arduino-cli` is provided, and that there is no system installed version (or the check was disabled via `CMAW_ARDUINOCLI_NOSYSTEM`), CMAW will setup its own local installation in `CMAW_AUTO_PATH` when set, or `CMAKE_BINARY_DIR` if not in script mode
+
 ## Experimental (Untested) Features
 
-- ArduinoCLI autodownload: if no path for `arduino-cli` is provided, and that there is no system installed version (or the check was disabled via `CMAW_ARDUINOCLI_NOSYSTEM`), CMAW will setup its own local installation.
 - Function `add_arduino_sketch`: Analogous to `add_executable`. Supports custom compiler options (assume GNU), compile definitions, and include directories.
 
 ## TODO
