@@ -436,6 +436,7 @@ function (cmaw_preprocess OUTVAR FQBN SKETCH_PATH)
   endif ()
   
   cmaw_internal_ardcli_invoke ("compile" "--preprocess" "--fqbn" "${FQBN}" "${SKETCH_PATH}")
+  string (REGEX REPLACE "^[^#]*#include <Arduino.h>\n#line 1" "#include <Arduino.h>\n#line 1" CMAW_INTERNAL_INVOKE_OUTPUT "${CMAW_INTERNAL_INVOKE_OUTPUT}")
   set (${OUTVAR} "${CMAW_INTERNAL_INVOKE_OUTPUT}" PARENT_SCOPE)
 endfunction ()
 
